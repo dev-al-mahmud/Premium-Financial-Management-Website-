@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FWFM | Wealth, Finance & Financial Management</title>
+    <!-- Custom Favicon (Oceanic Blue square with Gold-Sand abstract curve) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230A2540'/%3E%3Cpath d='M6 22 Q16 6 26 22' stroke='%23C9A66B' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --cream: #F9F6F1;
+            --cream-deep: #F2EDE4;
+            --oceanic: #0A2540;
+            --oceanic-light: #133B5C;
+            --gold-sand: #C9A66B;
+            --gold-sand-light: #E5D9C0;
+            --text-dark: #1A1A1A;
+            --text-muted: #4A4A4A;
+        }
+
+        * {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px; /* Offset for sticky header */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--cream);
+            color: var(--text-dark);
+            font-weight: 300;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Playfair Display', serif;
+            color: var(--oceanic);
+            letter-spacing: -0.02em;
+        }
+
+        .gold-line {
+            height: 2px;
+            width: 60px;
+            background-color: var(--gold-sand);
+            display: block;
+        }
+
+        /* Navigation */
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            display: block;
+            margin-top: 4px;
+            right: 0;
+            background: var(--gold-sand);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+            left: 0;
+            background: var(--gold-sand);
+        }
+
+        /* Service Cards */
+        .service-card {
+            background: #fff;
+            border: 1px solid rgba(10, 37, 64, 0.05);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px -20px rgba(10, 37, 64, 0.15);
+        }
+        .service-card .arrow {
+            transition: transform 0.3s ease;
+        }
+        .service-card:hover .arrow {
+            transform: translateX(8px);
+        }
+
+        /* Premium Section (The Exclusive Experience) */
+        .premium-section {
+            background: var(--oceanic);
+            color: #fff;
+            position: relative;
+        }
+        .premium-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(circle at 80% 20%, rgba(201, 166, 107, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .premium-section h2, .premium-section h3, .premium-section h4 {
+            color: #fff;
+        }
+        
+        .audience-tab {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+        }
+        .audience-tab.active {
+            background: rgba(255,255,255,0.03);
+            border-left: 3px solid var(--gold-sand);
+        }
+        .audience-tab.active .tab-title {
+            color: var(--gold-sand);
+        }
+        .audience-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .audience-content.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--oceanic);
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 2px;
+            font-size: 14px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: background 0.3s ease;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            background: var(--oceanic-light);
+        }
+        .btn-gold {
+            background: var(--gold-sand);
+            color: var(--oceanic);
+            padding: 14px 32px;
+            border-radius: 2px;
+            font-size: 14px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-weight: 500;
+            transition: background 0.3s ease;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-gold:hover {
+            background: #d4b27e;
+        }
+        .btn-outline-light {
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 2px;
+            font-size: 14px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            display: inline-block;
+            background: transparent;
+            cursor: pointer;
+        }
+        .btn-outline-light:hover {
+            border-color: var(--gold-sand);
+            color: var(--gold-sand);
+        }
+
+        /* Insights & Footer */
+        .insight-item {
+            border-top: 1px solid rgba(10, 37, 64, 0.1);
+            transition: padding 0.3s ease;
+        }
+        .insight-item:hover {
+            padding-left: 12px;
+        }
+        .insight-item:last-child {
+            border-bottom: 1px solid rgba(10, 37, 64, 0.1);
+        }
+
+        /* Contact Form */
+        .form-input {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(10, 37, 64, 0.2);
+            width: 100%;
+            padding: 12px 0;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            color: var(--oceanic);
+            transition: border-color 0.3s ease;
+            outline: none;
+        }
+        .form-input:focus { 
+            border-bottom-color: var(--gold-sand); 
+        }
+        .form-label { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            letter-spacing: 0.1em; 
+            color: var(--text-muted); 
+            display: block; 
+            margin-bottom: 8px; 
+        }
+
+        /* Layout Utilities */
+        .sticky-sidebar { 
+            position: sticky; 
+            top: 100px; 
+        }
+
+        @media (max-width: 768px) {
+            .audience-tabs-grid {
+                grid-template-columns: 1fr !important;
+                border-left: none;
+            }
+            .audience-tab {
+                border-left: none;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+            .audience-tab.active {
+                border-left: none;
+                border-bottom: 3px solid var(--gold-sand);
+            }
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Header / Navigation -->
+    <header class="sticky top-0 left-0 w-full z-50 py-5 bg-cream/90 backdrop-blur-md border-b border-oceanic/5" style="background-color: rgba(249, 246, 241, 0.9);">
+        <div class="container mx-auto px-6 md:px-12 flex justify-between items-center">
+            <a href="#home" class="flex items-center space-x-3">
+                <img src="https://z-cdn-media.chatglm.cn/files/2184296a-7367-49fa-9a0a-87b75751f333.png?auth_key=1881983790-bca559de51394e5895e9bf42388be6ed-0-0bac9c1c1fa06422313de7b3b1227567" alt="FWFM Logo" class="h-9 w-auto object-contain">
+                <span class="text-xl tracking-wide font-light hidden sm:block" style="color: var(--oceanic);">FWFM</span>
+            </a>
+            
+            <nav class="hidden lg:flex items-center space-x-10 text-sm font-light" style="color: var(--oceanic);">
+                <a href="#tax" class="nav-link">Tax Preparation</a>
+                <a href="#accounting" class="nav-link">Strategic Accounting</a>
+                <a href="#premium" class="nav-link">Premium Management</a>
+                <a href="#insights" class="nav-link">Insights</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+
+            <a href="#contact" class="hidden lg:inline-block text-xs tracking-widest uppercase border px-6 py-3 transition-all hover:bg-oceanic hover:text-white" style="color: var(--oceanic); border-color: var(--oceanic);">
+                Client Portal
+            </a>
+            <button class="lg:hidden text-2xl" style="color: var(--oceanic);">☰</button>
+        </div>
+    </header>
+
+    <main id="home">
+        <!-- Hero Section -->
+        <section class="relative py-32 md:py-40 flex items-center" style="background-color: var(--oceanic);">
+            <div class="container mx-auto px-6 md:px-12 z-10">
+                <div class="max-w-4xl">
+                    <span class="gold-line mb-8"></span>
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl text-white leading-tight mb-8">
+                        Wealth is not merely accumulated.<br>
+                        <em style="color: var(--gold-sand);">It is curated.</em>
+                    </h1>
+                    <p class="text-lg md:text-xl text-white/70 font-light max-w-2xl mb-10 leading-relaxed">
+                        A modern financial advisory for individuals, growing enterprises, and legacy-focused families. We translate complexity into absolute clarity.
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
+                        <a href="#contact" class="btn-gold text-center">Request Introduction</a>
+                        <a href="#tax" class="btn-outline-light text-center">Explore the Practice</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Abstract architectural lines overlay -->
+            <div class="absolute bottom-0 right-0 w-1/2 h-full opacity-10 pointer-events-none">
+                <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <path d="M0 100 L100 0" stroke="white" stroke-width="0.5" />
+                    <path d="M0 100 L100 20" stroke="white" stroke-width="0.5" />
+                    <path d="M0 100 L100 40" stroke="white" stroke-width="0.5" />
+                </svg>
+            </div>
+        </section>
+
+        <!-- TAX PREPARATION SECTION -->
+        <section id="tax" class="py-24 md:py-32">
+            <div class="container mx-auto px-6 md:px-12">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                    <!-- Sidebar -->
+                    <aside class="lg:col-span-4">
+                        <div class="sticky-sidebar">
+                            <span class="gold-line mb-6"></span>
+                            <span class="text-xs tracking-widest uppercase block mb-2" style="color: var(--text-muted);">01 — Individual & Family</span>
+                            <h2 class="text-3xl md:text-4xl mb-4">Tax Preparation</h2>
+                            <p class="text-base font-light leading-relaxed mb-8" style="color: var(--text-dark);">
+                                We view tax preparation not as an annual compliance event, but as a continuous opportunity for curation. Our approach is meticulous, proactive, and deeply human.
+                            </p>
+                            <a href="#contact" class="btn-primary text-center">Begin the Conversation</a>
+                        </div>
+                    </aside>
+
+                    <!-- Main Content -->
+                    <div class="lg:col-span-8 lg:pl-12 lg:border-l border-oceanic/10">
+                        <h3 class="text-2xl md:text-3xl mb-6">The Philosophy</h3>
+                        <p class="text-lg font-light leading-relaxed mb-12" style="color: var(--text-muted);">
+                            True tax optimization happens long before the filing deadline. We work year-round to understand the nuances of your financial life, ensuring every decision is made with tax efficiency in mind. No surprises. No generic software. Just deliberate, tailored strategy.
+                        </p>
+
+                        <div class="space-y-12">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div>
+                                    <h4 class="text-xl mb-3">Year-Round Strategy</h4>
+                                    <p class="font-light" style="color: var(--text-muted);">Quarterly reviews and proactive planning sessions to anticipate changes before they impact your liability.</p>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl mb-3">Multi-State Complexity</h4>
+                                    <p class="font-light" style="color: var(--text-muted);">Seamless management of multi-state residencies and rental properties, ensuring full compliance.</p>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl mb-3">Investment Integration</h4>
+                                    <p class="font-light" style="color: var(--text-muted);">Coordination with your wealth managers to align capital gains, losses, and asset location.</p>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl mb-3">Estate & Trust</h4>
+                                    <p class="font-light" style="color: var(--text-muted);">Preparation for fiduciaries, trusts, and estates, handling the complexities of generational wealth transfers.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STRATEGIC ACCOUNTING SECTION -->
+        <section id="accounting" class="py-24 md:py-32" style="background-color: var(--cream-deep);">
+            <div class="container mx-auto px-6 md:px-12">
+                <div class="max-w-4xl mb-20">
+                    <span class="gold-line mb-6"></span>
+                    <span class="text-xs tracking-widest uppercase block mb-2" style="color: var(--text-muted);">02 — Business & Professionals</span>
+                    <h2 class="text-4xl md:text-6xl mb-6">Strategic Accounting</h2>
+                    <p class="text-lg md:text-xl font-light" style="color: var(--text-muted);">
+                        Financial architecture for growing enterprises and modern professionals. We build the infrastructure required to scale with confidence.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-1 bg-oceanic/5 border border-oceanic/5">
+                    <div class="bg-cream p-10 md:p-12">
+                        <span class="text-xs tracking-widest uppercase mb-4 block" style="color: var(--text-muted);">Module 01</span>
+                        <h3 class="text-2xl mb-4">CFO Advisory</h3>
+                        <p class="font-light" style="color: var(--text-muted);">Fractional Chief Financial Officer services providing high-level forecasting, budgeting, and KPI tracking without the overhead of a full-time executive.</p>
+                    </div>
+                    <div class="bg-cream p-10 md:p-12">
+                        <span class="text-xs tracking-widest uppercase mb-4 block" style="color: var(--text-muted);">Module 02</span>
+                        <h3 class="text-2xl mb-4">Cloud Bookkeeping</h3>
+                        <p class="font-light" style="color: var(--text-muted);">Meticulous, automated bookkeeping systems. We close your books monthly, providing pristine financial statements ready for review.</p>
+                    </div>
+                    <div class="bg-cream p-10 md:p-12">
+                        <span class="text-xs tracking-widest uppercase mb-4 block" style="color: var(--text-muted);">Module 03</span>
+                        <h3 class="text-2xl mb-4">Entity Structuring</h3>
+                        <p class="font-light" style="color: var(--text-muted);">Strategic selection and maintenance of corporate structures to optimize for tax efficiency and liability protection.</p>
+                    </div>
+                    <div class="bg-cream p-10 md:p-12">
+                        <span class="text-xs tracking-widest uppercase mb-4 block" style="color: var(--text-muted);">Module 04</span>
+                        <h3 class="text-2xl mb-4">Payroll & HR Ops</h3>
+                        <p class="font-light" style="color: var(--text-muted);">Seamless payroll processing and benefits administration integrated directly into your accounting ledger.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PREMIUM MANAGEMENT SECTION -->
+        <section id="premium" class="premium-section py-24 md:py-32 relative overflow-hidden">
+            <div class="container mx-auto px-6 md:px-12 relative z-10">
+                <div class="max-w-3xl mb-16">
+                    <span class="text-xs tracking-widest uppercase mb-6 block" style="color: var(--gold-sand);">03 — Exclusive Mandate</span>
+                    <h2 class="text-4xl md:text-6xl mb-6">Premium Business Management</h2>
+                    <p class="text-white/70 text-lg font-light">A fully integrated financial operations department for high-net-worth individuals, founders, athletes, and legacy-focused families. Absolute discretion. Absolute precision.</p>
+                </div>
+
+                <!-- Interactive Audience Pathways -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-0 border border-white/10 mt-12">
+                    
+                    <!-- Tabs (Left Column) -->
+                    <div class="audience-tabs-grid grid-cols-1 md:col-span-4 grid md:grid-rows-4">
+                        <div class="audience-tab active p-8" data-tab="elite">
+                            <span class="text-xs text-white/40 block mb-2">Pathway 01</span>
+                            <h4 class="tab-title text-xl text-white">Elite Performers</h4>
+                        </div>
+                        <div class="audience-tab p-8" data-tab="corporate">
+                            <span class="text-xs text-white/40 block mb-2">Pathway 02</span>
+                            <h4 class="tab-title text-xl text-white">Corporate Leaders</h4>
+                        </div>
+                        <div class="audience-tab p-8" data-tab="wealth">
+                            <span class="text-xs text-white/40 block mb-2">Pathway 03</span>
+                            <h4 class="tab-title text-xl text-white">Wealth Creators</h4>
+                        </div>
+                        <div class="audience-tab p-8" data-tab="legacy">
+                            <span class="text-xs text-white/40 block mb-2">Pathway 04</span>
+                            <h4 class="tab-title text-xl text-white">Legacy Planners</h4>
+                        </div>
+                    </div>
+
+                    <!-- Content (Right Column) -->
+                    <div class="md:col-span-8 bg-white/[0.02] p-10 md:p-12 min-h-[400px] flex flex-col">
+                        
+                        <div id="elite" class="audience-content active flex-grow">
+                            <h3 class="text-2xl md:text-3xl mb-4">For Athletes & Entertainers</h3>
+                            <p class="text-white/60 mb-8 leading-relaxed font-light">Tour schedules, royalty streams, and multi-state residencies require a specialized financial apparatus. We handle the entirety of your financial back-office so you can remain focused on your craft.</p>
+                            <ul class="space-y-3 text-white/80 font-light">
+                                <li class="flex items-center"><span class="w-2 h-2 bg-gold-sand rounded-full mr-4" style="background: var(--gold-sand);"></span> Multi-state tax mitigation & residency planning</li>
+                                <li class="flex items-center"><span class="w-2 h-2 bg-gold-sand rounded-full mr-4" style="background: var(--gold-sand);"></span> Cash flow management & lifestyle accounting</li>
+                                <li class="flex items-center"><span class="w-2 h-2 bg-gold-sand rounded-full mr-4" style="background: var(--gold-sand);"></span> Tour/Production expense management</li>
+                            </ul>
+                        </div>
+
+                        <div id="corporate" class="audience-content flex-grow">
+                            <h3 class="text-2xl md:text-3xl mb-4">For Executives & Founders</h3>
+                            <p class="text-white/60 mb-8 leading-relaxed font-light">Equity compensation, liquidity events, and corporate liability demand a coordinated financial strategy that bridges your personal wealth with your corporate mandate.</p>
+                            <ul class="space-y-3 text-white/80 font-light">
+                                <li class="flex items-center"><span class="w-2 h-2 bg-gold-sand rounded-full mr-4" style="background: var(--gold-sand);"></span> Equity & RSU strategy optimization</li>
+                                <li class="flex items-center"><span class="w-2 h-2 bg-gold-sand rounded-full mr-4" style="background: var(--gold-sand);"></span> Pre-liquidity event tax planning</li>
+                                <li class="flex items-center"><span class="w-2 h-2 bg-gold-sand rounded-full mr-4" style="background: var(--gold-sand);"></span> Corporate & personal expense segregation</li>
+                            </ul>
+                        </div>
+
+                        <div id="wealth" class="audience-content flex-grow">
+                            <h3 class="text-2xl md:text-3xl mb-4">For Wealth Creators</h3>
+                            <p class="text-white/60 mb-8 leading-relaxed font-light">Serial entrepreneurs and high-income professionals require aggressive, compliant tax strategy and operational scaling to preserve and deploy capital effectively.</p>
+                            <ul class="space-y-3 text-white/80 font-light">
+                                <li class="flex items-center"><span class="w-2 h-2 bg-gold-sand rounded-full mr-4" style="background: var(--gold-sand);"></span> Entity structuring & asset protection</li>
+                                <li class="flex items-center"><span class="w-2 h-2 bg-gold-sand rounded-full mr-4" style="background: var(--gold-sand);"></span> Real estate & passive activity tracking</li>
+                                <li class="flex items-center"><span class="w-2 h-2 bg-gold-sand rounded-full mr-4" style="background: var(--gold-sand);"></span> Executive tax shielding strategies</li>
+                            </ul>
+                        </div>
+
+                        <div id="legacy" class="audience-content flex-grow">
+                            <h3 class="text-2xl md:text-3xl mb-4">For Legacy Planners</h3>
+                            <p class="text-white/60 mb-8 leading-relaxed font-light">Multigenerational wealth requires an architecture designed to last centuries. We coordinate with your legal counsel to ensure seamless transition and trust administration.</p>
+                            <ul class="space-y-3 text-white/80 font-light">
+                                <li class="flex items-center"><span class="w-2 h-2 bg-gold-sand rounded-full mr-4" style="background: var(--gold-sand);"></span> Trust & estate tax compliance</li>
+                                <li class="flex items-center"><span class="w-2 h-2 bg-gold-sand rounded-full mr-4" style="background: var(--gold-sand);"></span> Family office financial administration</li>
+                                <li class="flex items-center"><span class="w-2 h-2 bg-gold-sand rounded-full mr-4" style="background: var(--gold-sand);"></span> Charitable foundation management</li>
+                            </ul>
+                        </div>
+
+                        <div class="mt-auto pt-8">
+                            <a href="#contact" class="btn-gold inline-block">Request Mandate</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INSIGHTS HUB SECTION -->
+        <section id="insights" class="py-24 md:py-32">
+            <div class="container mx-auto px-6 md:px-12">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
+                    <div>
+                        <span class="gold-line mb-6"></span>
+                        <h2 class="text-3xl md:text-5xl">Insights Hub</h2>
+                    </div>
+                    <a href="#" class="hidden md:flex items-center text-oceanic hover:text-gold-sand transition-colors" style="color: var(--oceanic);">
+                        <span class="text-sm tracking-wider uppercase mr-3">View All</span> →
+                    </a>
+                </div>
+
+                <div class="space-y-6">
+                    <a href="#" class="insight-item flex flex-col md:flex-row md:items-center justify-between py-6 transition-all">
+                        <div class="max-w-2xl">
+                            <span class="text-xs uppercase tracking-widest text-muted" style="color: var(--text-muted);">Tax Strategy</span>
+                            <h3 class="text-2xl md:text-3xl mt-2 hover:text-gold-sand transition-colors">The Modern Architecture of Pass-Through Entities</h3>
+                        </div>
+                        <span class="text-sm text-muted mt-4 md:mt-0" style="color: var(--text-muted);">Q1 / 2026</span>
+                    </a>
+                    <a href="#" class="insight-item flex flex-col md:flex-row md:items-center justify-between py-6 transition-all">
+                        <div class="max-w-2xl">
+                            <span class="text-xs uppercase tracking-widest text-muted" style="color: var(--text-muted);">Premium Management</span>
+                            <h3 class="text-2xl md:text-3xl mt-2 hover:text-gold-sand transition-colors">Liquidity Events: A Founder's Guide to Post-Exit Capital</h3>
+                        </div>
+                        <span class="text-sm text-muted mt-4 md:mt-0" style="color: var(--text-muted);">Q4 / 2023</span>
+                    </a>
+                    <a href="#" class="insight-item flex flex-col md:flex-row md:items-center justify-between py-6 transition-all">
+                        <div class="max-w-2xl">
+                            <span class="text-xs uppercase tracking-widest text-muted" style="color: var(--text-muted);">Estate & Legacy</span>
+                            <h3 class="text-2xl md:text-3xl mt-2 hover:text-gold-sand transition-colors">Beyond the Trust: Curating Generational Financial Literacy</h3>
+                        </div>
+                        <span class="text-sm text-muted mt-4 md:mt-0" style="color: var(--text-muted);">Q3 / 2023</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT FORM SECTION -->
+        <section id="contact" class="py-24 md:py-32" style="background-color: var(--cream-deep);">
+            <div class="container mx-auto px-6 md:px-12">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+                    <!-- Info Column -->
+                    <div class="lg:col-span-5">
+                        <span class="gold-line mb-6"></span>
+                        <h2 class="text-4xl md:text-5xl mb-8">A Discreet <br>Conversation</h2>
+                        <p class="text-lg font-light leading-relaxed mb-10" style="color: var(--text-muted);">
+                            We accept a limited number of new clients each year to ensure absolute dedication to your financial architecture. Please share your context, and we will respond within 24 hours to schedule a confidential introduction.
+                        </p>
+                        
+                        <div class="space-y-6 mt-12">
+                            <div>
+                                <p class="text-xs uppercase tracking-widest mb-1" style="color: var(--text-muted);">Direct Email</p>
+                                <a href="mailto:concierge@fwfm.com" class="text-lg hover:text-gold-sand transition-colors" style="color: var(--oceanic);">concierge@fwfm.com</a>
+                            </div>
+                            <div>
+                                <p class="text-xs uppercase tracking-widest mb-1" style="color: var(--text-muted);">Client Line</p>
+                                <a href="tel:+18005550100" class="text-lg hover:text-gold-sand transition-colors" style="color: var(--oceanic);">+1 (800) 555-0100</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form Column -->
+                    <div class="lg:col-span-7 lg:pl-10 lg:border-l border-oceanic/10">
+                        <form id="contactForm" class="space-y-10" onsubmit="submitForm(event)">
+                            <div>
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-input" required placeholder="Jordan Smith">
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                                <div>
+                                    <label class="form-label">Email Address</label>
+                                    <input type="email" class="form-input" required placeholder="jordan@example.com">
+                                </div>
+                                <div>
+                                    <label class="form-label">Phone (Optional)</label>
+                                    <input type="tel" class="form-input" placeholder="+1 (555) 000-0000">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="form-label">Area of Interest</label>
+                                <select class="form-input cursor-pointer" required>
+                                    <option value="" disabled selected>Select a service...</option>
+                                    <option>Tax Preparation</option>
+                                    <option>Strategic Accounting</option>
+                                    <option>Premium Business Management</option>
+                                    <option>General Inquiry</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="form-label">Brief Context</label>
+                                <textarea class="form-input" rows="3" required placeholder="Provide a brief overview of your current financial structure or immediate objectives..."></textarea>
+                            </div>
+                            <div class="pt-4">
+                                <button type="submit" class="btn-primary w-full md:w-auto">Request Introduction</button>
+                                <p id="formSuccess" class="hidden mt-6 text-sm" style="color: var(--gold-sand);">Thank you. Our concierge will be in touch within 24 hours.</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-16 bg-cream" style="background-color: var(--cream);">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="md:col-span-2">
+                    <img src="https://z-cdn-media.chatglm.cn/files/2184296a-7367-49fa-9a0a-87b75751f333.png?auth_key=1881983790-bca559de51394e5895e9bf42388be6ed-0-0bac9c1c1fa06422313de7b3b1227567" alt="FWFM Logo" class="h-10 w-auto mb-6">
+                    <p class="text-sm max-w-md font-light leading-relaxed" style="color: var(--text-muted);">
+                        A modern wealth, finance, and financial management firm structured for the modern era.
+                    </p>
+                </div>
+                <div>
+                    <h5 class="text-sm uppercase tracking-widest mb-4" style="color: var(--oceanic); font-family: 'Inter', sans-serif; font-weight: 500;">Services</h5>
+                    <ul class="space-y-3 text-sm font-light">
+                        <li><a href="#tax" class="hover:text-gold-sand transition-colors" style="color: var(--text-muted);">Tax Preparation</a></li>
+                        <li><a href="#accounting" class="hover:text-gold-sand transition-colors" style="color: var(--text-muted);">Strategic Accounting</a></li>
+                        <li><a href="#premium" class="hover:text-gold-sand transition-colors" style="color: var(--text-muted);">Premium Management</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-sm uppercase tracking-widest mb-4" style="color: var(--oceanic); font-family: 'Inter', sans-serif; font-weight: 500;">Firm</h5>
+                    <ul class="space-y-3 text-sm font-light">
+                        <li><a href="#insights" class="hover:text-gold-sand transition-colors" style="color: var(--text-muted);">Insights</a></li>
+                        <li><a href="#contact" class="hover:text-gold-sand transition-colors" style="color: var(--text-muted);">Contact</a></li>
+                        <li><a href="#" class="hover:text-gold-sand transition-colors" style="color: var(--text-muted);">Client Portal</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-oceanic/10 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-xs" style="color: var(--text-muted);">© 2026 FWFM. All rights reserved. Developed By Al Mahmud</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="text-xs text-muted hover:text-oceanic transition-colors" style="color: var(--text-muted);">Privacy Policy</a>
+                    <a href="#" class="text-xs text-muted hover:text-oceanic transition-colors" style="color: var(--text-muted);">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Premium Section Interactive Pathways
+        const tabs = document.querySelectorAll('.audience-tab');
+        const contents = document.querySelectorAll('.audience-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.getAttribute('data-tab');
+                
+                // Remove active from all
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+                
+                // Add active to clicked
+                tab.classList.add('active');
+                document.getElementById(target).classList.add('active');
+            });
+        });
+
+        // Contact Form Logic
+        function submitForm(event) {
+            event.preventDefault();
+            // Hide form button, show success message
+            document.getElementById('formSuccess').classList.remove('hidden');
+            event.target.querySelector('button[type="submit"]').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
